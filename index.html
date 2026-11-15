@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aviation Weather Briefing | PTDI × BMKG × ITB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef5ff;--pan:#fff;--ln:#d6e3f6;--tx:#0f2744;--mu:#5b7090;--am:#f26a00;--tl:#0a9d8a;--rd:#e5384f;--bl:#1769e0}
+*{box-sizing:border-box}[hidden]{display:none!important}html{scroll-behavior:smooth}
+body{margin:0;display:grid;grid-template-columns:268px 1fr;font:15px/1.55 'IBM Plex Sans',system-ui,sans-serif;color:var(--tx);background:linear-gradient(#f3f8fff0,#eaf3ffee),url(gambar/awan.webp) center/cover fixed #eef5ff}
+h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;margin:0;letter-spacing:-.02em}.mono,.utc,.wib,pre,input,select,textarea{font-family:'IBM Plex Mono',monospace}a{color:var(--bl)}button{font:inherit;cursor:pointer}:focus-visible{outline:2px solid var(--am);outline-offset:2px}
+.side{position:sticky;top:0;height:100vh;padding:18px 14px;background:#fff;border-right:1px solid var(--ln);display:flex;flex-direction:column;gap:8px;z-index:30}
+.logos{display:flex;gap:10px;align-items:center;justify-content:center;padding:8px;background:transparent;border:0}.logos img{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#fff;box-shadow:0 4px 10px -4px #1769e055}
+.side h1{font-size:16px;line-height:1.15;margin:8px 4px 2px}.side small{color:var(--mu);padding:0 4px 8px}
+.tab{display:flex;gap:12px;align-items:center;text-align:left;width:100%;padding:9px 10px;border-radius:14px;border:0;background:none;font-weight:600;color:var(--mu);transition:.2s}
+.tab i{font-style:normal;width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:#eef5ff;font-size:17px}.tab:hover{background:#f2f7ff;color:var(--tx);transform:translateX(3px)}
+.tab.on{background:linear-gradient(100deg,#1769e0,#2b8cff);color:#fff;box-shadow:0 10px 22px -10px #1769e0}.tab.on i{background:#ffffff33}
+.sp{flex:1}.clk{background:#f3f8ff;border:1px solid var(--ln);border-radius:14px;padding:10px 12px;font-size:12px;color:var(--mu)}.clk b{display:block;font-size:22px;color:var(--am)}
+.live{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--tl);animation:pulse 2s infinite;margin-right:6px}@keyframes pulse{50%{box-shadow:0 0 0 8px #0a9d8a00;opacity:.6}}
+.btn{border:1px solid var(--ln);background:#fff;color:var(--tx);padding:9px 15px;border-radius:12px;font-weight:600;transition:.2s}.btn:hover{border-color:var(--bl);transform:translateY(-1px)}.btn:disabled{opacity:.6}
+.btn.pri{background:linear-gradient(100deg,#f26a00,#ff9a3c);color:#fff;border:0;box-shadow:0 10px 20px -10px #f26a00}
+main{padding:28px 32px 60px;min-width:0;max-width:1240px;width:100%}.view{animation:vin .45s cubic-bezier(.2,.8,.2,1)}@keyframes vin{from{opacity:0;transform:translateY(14px)}}
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.b{background:var(--pan);border:1px solid var(--ln);border-radius:22px;padding:22px;box-shadow:0 14px 34px -22px #1769e077}
+.hero{grid-column:span 8;grid-row:span 2;position:relative;overflow:hidden;min-height:340px;background:linear-gradient(90deg,#fff 40%,#ffffffc0 62%,#ffffff30),url(gambar/pesawat.jpg) right/cover}
+#flow{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.hero .in{position:relative;max-width:540px}
+.pill{display:inline-block;background:#e8f1ff;color:var(--bl);font:600 12px 'IBM Plex Mono';padding:5px 12px;border-radius:999px}.hero h2{font-size:clamp(28px,3.6vw,44px);line-height:1.05;margin:14px 0 10px;font-weight:800}.hero p{color:var(--mu)}.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.zulu{grid-column:span 4;position:relative;overflow:hidden;background:linear-gradient(160deg,#1769e0,#0a9fd8);color:#fff}.zulu .utc{font-size:clamp(32px,3.4vw,46px);font-weight:600;line-height:1}.zulu small{opacity:.85;display:block}
+.arc{height:70px;margin-top:6px}.arc path{fill:none;stroke:#ffffff80;stroke-width:2;stroke-dasharray:5 7}.plane{position:absolute;left:22px;top:118px;width:24px;offset-path:path('M0 50 Q 120 -30 240 30');offset-rotate:auto;animation:fly 7s ease-in-out infinite alternate}@keyframes fly{0%{offset-distance:0%}100%{offset-distance:100%}}
+.hero-sky{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}.hero .in{z-index:2}.hero-plane{offset-path:path('M-30 250 Q 260 60 630 140');offset-rotate:auto;animation:heroFly 11s linear infinite}@keyframes heroFly{0%{offset-distance:0%;opacity:0}8%{opacity:1}92%{opacity:1}100%{offset-distance:100%;opacity:0}}
+.mod{grid-column:span 4;text-align:left;color:var(--tx);background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),color-mix(in srgb,var(--c) 22%,transparent),transparent 65%),#fff;transition:border-color .25s,box-shadow .25s,transform .12s}.mod.w{grid-column:span 6}
+.mod:hover{border-color:var(--c);box-shadow:0 22px 40px -22px var(--c)}.mod i{font-style:normal;font-size:30px;display:grid;place-items:center;width:54px;height:54px;border-radius:16px;background:color-mix(in srgb,var(--c) 14%,#fff);margin-bottom:12px}.mod h3{font-size:19px}.mod span{color:var(--mu);font-size:13px}
+.status{grid-column:span 6}.src{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;font-size:13px}.src span{background:#f3f8ff;border:1px solid var(--ln);border-radius:999px;padding:5px 12px}.d{display:inline-block;width:8px;height:8px;border-radius:50%;background:#94a3b8;margin-right:7px}.d.ok{background:var(--tl)}.d.no{background:var(--rd)}.note{color:var(--mu);font-size:12.5px;margin:0}
+.head{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:end;margin-bottom:18px}.head h2{font-size:32px}.head p{margin:4px 0 0;color:var(--mu);max-width:68ch}
+.card{background:#fff;border:1px solid var(--ln);border-radius:20px;padding:18px;margin-bottom:18px;box-shadow:0 14px 34px -26px #1769e077}.card header{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px}
+select,input[type=text],input[type=date],textarea{background:#fff;color:var(--tx);border:1px solid var(--ln);border-radius:10px;padding:10px 12px;font-size:13px;max-width:100%}select{min-width:220px}.row{display:flex;gap:8px;margin-bottom:8px}.row input{flex:1}
+.x{background:#fff0f2;border:1px solid #ffc2cb;color:var(--rd);border-radius:10px;padding:0 12px}.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.chip{background:#fff;border:1px dashed #a9c3ea;color:var(--mu);border-radius:999px;padding:4px 11px;font:12px 'IBM Plex Mono'}.chip:hover{color:var(--am);border-color:var(--am)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px}pre{margin:6px 0 12px;background:#f3f8ff;border:1px solid var(--ln);border-radius:12px;padding:12px;white-space:pre-wrap;word-break:break-word;font-size:13px}
+.k{font-size:12px;color:var(--mu)}.badge{font:600 11px 'IBM Plex Mono';padding:3px 9px;border-radius:999px;background:#d9f5ef;color:#07806f}.badge.alt{background:#e0edff;color:var(--bl)}.badge.man{background:#fff0dc;color:var(--am)}
+.cat{font:600 11px 'IBM Plex Mono';padding:3px 9px;border-radius:999px}.VFR{background:#2fd3a6;color:#032a20}.MVFR{background:#5aa9ff;color:#03213f}.IFR{background:#ff6b7a;color:#3a0009}.LIFR{background:#d86bff;color:#2a0038}
+.frame{position:relative;min-height:300px;background:#f1f6fd;border-radius:14px;overflow:auto;display:grid;place-items:center;max-height:78vh}.frame img{max-width:100%;display:block;transform-origin:top left;cursor:zoom-in}
+.frame.loading::after{content:'';position:absolute;width:34px;height:34px;border:3px solid var(--ln);border-top-color:var(--am);border-radius:50%;animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}.fail{padding:30px;text-align:center;color:var(--mu)}.fail b{color:var(--rd);display:block;margin-bottom:6px}
+.zoom{display:flex;align-items:center;gap:6px}#visf{width:100%;height:520px;border:1px solid var(--ln);border-radius:14px;background:#f1f6fd}
+.vr{display:grid;grid-template-columns:60px minmax(120px,1.2fr) 3fr 80px 64px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid #edf3fc}.vbar{height:12px;background:#edf3fc;border-radius:99px;overflow:hidden}.vbar i{display:block;height:100%;border-radius:99px;transition:width 1s}
+.viz{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:4px 0 12px;padding:12px;background:#f6faff;border:1px solid var(--ln);border-radius:14px}.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:8px;flex:1;min-width:230px}
+.tiles div{background:#fff;border:1px solid var(--ln);border-radius:10px;padding:8px 10px}.tiles b{display:block;font:600 16px 'IBM Plex Mono';color:var(--am)}.tiles small{color:var(--mu);font-size:11px}.viz svg g{transition:transform .9s cubic-bezier(.3,1.4,.5,1)}.rwy{width:100%;accent-color:#f26a00}
+#lb{position:fixed;inset:0;z-index:99;background:#0a1830ee;display:none;overflow:hidden;cursor:grab}#lb.on{display:block}#lb img{position:absolute;left:50%;top:50%;max-width:92vw;max-height:90vh;user-select:none;-webkit-user-drag:none;background:#fff}#lb span{position:fixed;top:14px;left:50%;transform:translateX(-50%);color:#cfe0f7;font:12px 'IBM Plex Mono'}
+#rep{display:none}
+@media(max-width:1000px){.bento>*{grid-column:span 12!important}.hero{grid-row:auto}}
+@media(max-width:900px){body{grid-template-columns:1fr}.side{position:fixed;inset:auto 0 0 0;height:auto;flex-direction:row;padding:6px;overflow-x:auto;border-top:1px solid var(--ln);border-right:0}.side>:not(.tabs){display:none}.tabs{display:flex;gap:4px}.tab{padding:6px}.tab b{display:none}main{padding:18px 14px 100px}.vr{grid-template-columns:54px 1fr 70px 56px}.vr .k,.vr .vbar{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}</style><link rel="stylesheet" href="theme.css"></head><body>
+<aside class="side"><div class="logos"><img src="gambar/logo%20ptdi.webp" alt="PTDI"><img src="gambar/logo%20bmkg.jpg" alt="BMKG"><img src="gambar/logo%20itb.webp" alt="ITB"></div>
+<h1>Aviation Weather Briefing</h1><small>PTDI Flight Test Operations · Prodi Meteorologi ITB</small>
+<nav class="tabs" id="tabs"><button class="tab on" data-v="home"><i>🏠</i><b>Beranda</b></button><button class="tab" data-v="metar"><i>🌤️</i><b>METAR / TAF</b></button><button class="tab" data-v="sat"><i>🛰️</i><b>Himawari-9</b></button><button class="tab" data-v="st"><i>💨</i><b>Streamline 3000 ft</b></button><button class="tab" data-v="wt"><i>📈</i><b>Wind / Temp</b></button><button class="tab" data-v="vis"><i>👁️</i><b>Visibility METAR</b></button></nav>
+<div class="sp"></div><div class="clk"><span class="live"></span>UTC<b class="utc mono">--:--:--</b><div style="margin-top:4px;font-size:11.5px;color:var(--tx)">WIB <span class="wib mono" style="font-weight:600">--:--:--</span></div></div>
+<button class="btn pri" id="xp" onclick="exportPDF()">⬇ Unduh PDF Briefing</button><button class="btn" id="xm" onclick="sendMail()">✉ Kirim PDF ke email</button></aside>
+<main>
+<section class="view" id="v-home"><div class="bento">
+ <div class="b hero"><canvas id="flow"></canvas><svg class="hero-sky" viewBox="0 0 600 320" preserveAspectRatio="none"><path id="froute" d="M-30 250 Q 260 60 630 140" fill="none" stroke="rgba(23,105,224,0.28)" stroke-width="2" stroke-dasharray="6 8"/><g class="hero-plane"><path d="M28 14 L4 4 L9 14 L4 24 Z" fill="#f26a00"/><path d="M16 14 L8 9 L10 14 L8 19 Z" fill="#1769e0"/></g></svg><div class="in"><span class="pill"><i class="live"></i>Cuaca penerbangan hari ini</span><h2>Langit hari ini, siap terbang atau tidak?</h2><p>METAR/TAF, visibilitas, citra satelit, streamline, dan chart wind/temp. Pilih datanya, lalu unduh PDF briefing sekali klik.</p><div class="cta"><button class="btn pri" data-go="metar">Mulai briefing</button></div></div></div>
+ <div class="b zulu"><small class="mono">ZULU · UTC</small><div class="utc mono">--:--:--</div><small class="date"></small><small class="mono">WIB <span class="wib"></span></small><svg class="arc" viewBox="0 0 240 70"><path d="M0 50 Q120 -30 240 30"/></svg><svg class="plane" viewBox="0 0 24 24"><path fill="#fff" d="M2 12 22 3l-5 9 5 9z"/></svg></div>
+ <button class="b mod" data-go="metar" style="--c:#1769e0"><i>🌤️</i><h3>METAR / TAF</h3><span>Observasi dan prakiraan aerodrome (METAR &amp; TAF).</span></button>
+ <button class="b mod" data-go="sat" style="--c:#7b4dff"><i>🛰️</i><h3>Himawari-9</h3><span>Citra IR enhanced, refresh 10 menit.</span></button>
+ <button class="b mod" data-go="st" style="--c:#f26a00"><i>💨</i><h3>Streamline 3000 ft</h3><span>Aliran angin lapisan bawah, bisa di-zoom.</span></button>
+ <button class="b mod" data-go="wt" style="--c:#e5384f"><i>📈</i><h3>Wind / Temp</h3><span>Chart FL050–FL530 per jam validasi UTC.</span></button>
+ <button class="b mod w" data-go="vis" style="--c:#0a9d8a"><i>👁️</i><h3>Visibility METAR</h3><span>Peta Visibility Map &amp; Visibility FU BMKG.</span></button>
+ <div class="b status"><h3>Status sumber data BMKG</h3><div class="src" id="srcs"></div><p class="note">Gambar dimuat langsung dari server BMKG. Data pendukung briefing, wajib dicocokkan dengan kantor meteorologi penerbangan resmi sebelum terbang.</p></div>
+</div></section>
+<section class="view" id="v-metar" hidden>
+ <div class="head"><div><h2>Multi-Aerodrome METAR / TAF</h2><p>Ketik kode ICAO atau nama bandara, tambahkan beberapa stasiun sekaligus.</p></div></div>
+ <div class="card"><div id="rows"></div>
+  <div class="chips" id="chips"></div><datalist id="apl"></datalist>
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><button class="btn" onclick="addRow()">+ Tambah bandara</button><button class="btn pri" id="go" onclick="runMetar()">Tampilkan semua data</button></div></div>
+ <div class="two" id="res"></div>
+</section>
+<section class="view" id="v-sat" hidden>
+ <div class="head"><div><h2>Himawari-9 Enhanced Infrared</h2><p>Citra wilayah Indonesia untuk pertumbuhan awan konvektif. Diperbarui otomatis tiap 10 menit.</p></div><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><label class="k" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-weight:600;color:var(--tx);background:#fff;border:1px solid var(--ln);padding:8px 12px;border-radius:12px"><input type="checkbox" id="satpdf" checked onchange="if(S.sat){S.sat.pdf=this.checked;save()}"> Cantumkan di PDF</label><span class="k" id="sat-t"></span> <button class="btn" onclick="loadSat()">Refresh</button> <a class="btn" style="text-decoration:none;display:inline-block" target="_blank" rel="noopener" href="https://www.bmkg.go.id/cuaca/satelit/himawari-ir-enhanced">Buka di BMKG</a></div></div>
+ <div class="card"><div class="frame" id="satf"><img id="satimg" alt="Himawari-9 BMKG"></div><p class="k">Sumber: BMKG (inderaja.bmkg.go.id). Penggunaan wajib mencantumkan BMKG.</p></div>
+</section>
+<section class="view" id="v-st" hidden>
+ <div class="head"><div><h2>Streamline 3000 ft</h2><p id="st-t">Prakiraan besok dari BMKG.</p></div><div class="zoom" style="flex-wrap:wrap"><label class="k" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-weight:600;color:var(--tx);background:#fff;border:1px solid var(--ln);padding:8px 12px;border-radius:12px"><input type="checkbox" id="stpdf" checked onchange="if(S.st){S.st.pdf=this.checked;save()}"> Cantumkan di PDF</label><button class="btn" onclick="zoom(-.25)">−</button><span class="mono k" id="zv">100%</span><button class="btn" onclick="zoom(.25)">+</button><button class="btn" onclick="zoom(0)">Reset</button><button class="btn pri" onclick="loadSt()">Refresh live</button></div></div>
+ <div class="card"><div class="frame" id="stf"><img id="stimg" alt="Streamline 3000 ft BMKG"></div></div>
+</section>
+<section class="view" id="v-wt" hidden>
+ <div class="head"><div><h2>Upper Air Wind &amp; Temperature</h2><p>Atur level tekanan dan jam validasi UTC, lalu render.</p></div><div><button class="btn" onclick="addCh()">+ Tambah chart</button> <button class="btn pri" onclick="renderCh()">Render semua chart</button></div></div>
+ <div id="chrows"></div><div id="chout"></div>
+</section>
+<section class="view" id="v-vis" hidden>
+ <div class="head"><div><h2>Visibility METAR</h2><p>Realtime Data · Pilih jenis peta (Visibility Map / Visibility FU) &amp; waktu UTC, tambahkan beberapa chart sekaligus.</p></div><div><button class="btn" onclick="addVisCh()">+ Tambah chart</button></div></div>
+ <div id="visrows"></div>
+</section>
+</main>
+<div id="rep"></div><div id="lb"><span>Scroll = zoom · seret = geser · Esc = tutup</span><img alt=""></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const $=(s,e=document)=>e.querySelector(s),$$=(s,e=document)=>[...e.querySelectorAll(s)],pad=n=>String(n).padStart(2,'0');
+const AP=[["WIME", "Aek Godang"], ["WIBS", "Bengkalis"], ["WIMB", "Binaka"], ["WIPO", "Gatot Subroto"], ["WITC", "Cut Nyak Dhien"], ["WIDS", "Dabo"], ["WIPK", "Depati Amir"], ["WIJI", "Depati Parbo"], ["WIGG", "Fatmawati Soekarno"], ["WIMS", "Ferdinand Lumban Tobing"], ["WIKT", "H.A.S. Hanandjoeddin"], ["WIDD", "Hang Nadim"], ["WIMM", "Kualanamu"], ["WIEE", "Minangkabau"], ["WITT", "Sultan Iskandar Muda"], ["WIPR", "Japura"], ["WIML", "Lasikin"], ["WIMO", "Lasondre"], ["WIAB", "Maimun Saleh"], ["WITM", "Malikus Saleh"], ["WIBR", "Mentawai"], ["WIJB", "Muara Bungo"], ["WIGM", "Mukomuko"], ["WIBD", "Pinang Kampai"], ["WILL", "Radin Inten II"], ["WIDT", "Raja Haji Abdullah"], ["WIDN", "Raja Haji Fisabilillah"], ["WION", "Ranai"], ["WITK", "Rembele"], ["WIMS", "Sibisa"], ["WIPB", "Silampari"], ["WIMN", "Sisingamangaraja XII"], ["WIPP", "Sultan Mahmud Badaruddin II"], ["WIBB", "Sultan Syarif Kasim II"], ["WIJJ", "Sultan Thaha"], ["WIMT", "Teuku Cut Ali"], ["WIBG", "Tuanku Tambusai"], ["WIMK", "Soewondo"], ["WIMG", "Sutan Sjahrir"], ["WARA", "Abdulrachman Saleh"], ["WAHH", "Adisutjipto"], ["WAHS", "Ahmad Yani"], ["WADY", "Banyuwangi"], ["WARC", "Ngloram"], ["WIRR", "Budiarto"], ["WICD", "Cakrabhuwana"], ["WICN", "Nusawiru"], ["WARD", "Dhoho"], ["WIHH", "Halim Perdanakusuma"], ["WICC", "Husein Sastranegara"], ["WAHQ", "Adi Soemarmo"], ["WARR", "Juanda"], ["WICA", "Kertajati"], ["WIII", "Soekarno-Hatta"], ["WAHI", "Yogyakarta International"], ["WARS", "Notohadinegoro"], ["WIHP", "Pondok Cabe"], ["WIIG", "Pulau Panjang"], ["WART", "Trunojoyo"], ["WAHL", "Tunggul Wulung"], ["WICM", "Wiriadinata"], ["WRBC", "Bersujud"], ["WAOM", "Beringin"], ["WALJ", "Datah Dawai"], ["WAOK", "Gusti Sjamsir Alam"], ["WAGS", "H. Asan"], ["WAGB", "Haji Muhammad Sidik"], ["WALS", "APT Pranoto"], ["WALL", "SAMS Sepinggan"], ["WIOO", "Supadio"], ["WAGI", "Iskandar"], ["WAQQ", "Juwata"], ["WAQT", "Kalimarau"], ["WAGA", "Kuala Kurun"], ["WAGF", "Kuala Pembuang"], ["WALC", "LNG Badak"], ["WAQL", "Long Apung"], ["WAQC", "Maratua"], ["WALE", "Melalan"], ["WIOG", "Nanga Pinoh"], ["WAQA", "Nunukan"], ["WIOP", "Pangsuma"], ["WIOK", "Rahadi Oesman"], ["WALM", "Robert Atty Bessing"], ["WAOO", "Syamsudin Noor"], ["WAQD", "Tanjung Harapan"], ["WIOS", "Tebelian"], ["WAGG", "Tjilik Riwut"], ["WAON", "Warukin"], ["WAQJ", "Yuvai Semaring"], ["WAWM", "Andi Jemma"], ["WAWN", "Arung Palakka"], ["WAWB", "Betoambari"], ["WAFD", "Bua"], ["WAMG", "Djalaluddin"], ["WAWH", "H. Aroeppala"], ["WAWW", "Haluoleo"], ["WAMM", "Sam Ratulangi"], ["WAAA", "Sultan Hasanuddin"], ["WAMP", "Kasiguncu"], ["WAWD", "Matahora"], ["WAMN", "Melonguane"], ["WAMS", "Miangas"], ["WAFF", "Mutiara SIS Al-Jufrie"], ["WAMH", "Naha"], ["WAFY", "Pogogul"], ["WAFT", "Pongtiku"], ["WAFK", "Rampi"], ["WAWP", "Sangia Nibandera"], ["WAFN", "Seko"], ["WAWR", "Sugimanuru"], ["WAMI", "Sultan Bantilan"], ["WAFM", "Sumarorong"], ["WAMW", "Syukuran Aminuddin Amir"], ["WAMO", "Siau"], ["WAAJ", "Tampa Padang"], ["WAFU", "Tanjung Api"], ["WATA", "A.A. Bere Tallo"], ["WATR", "D. C. Saundale"], ["WATT", "El Tari"], ["WATC", "Frans Seda"], ["WRTG", "Frans Sales Lega"], ["WATL", "Gewayantana"], ["WATE", "H. Hasan Aroeboesman"], ["WADD", "I Gusti Ngurah Rai"], ["WADL", "Lombok"], ["WATO", "Komodo"], ["WRKM", "Mali"], ["WATU", "Umbu Mehang Kunda"], ["WADS", "Sultan Muhammad Kaharuddin III"], ["WADB", "Sultan Muhammad Salahuddin"], ["WATB", "Soa Bajawa"], ["WATK", "Lede Kalumbang"], ["WATS", "Tardamu"], ["WATW", "Wunopito"], ["WAPA", "Amahai"], ["WAPC", "Bandanaira"], ["WAPK", "Benjina"], ["WAEM", "Buli"], ["WAPD", "Rar Gwamar"], ["WAPN", "Emalamo"], ["WAEG", "Gamarmalamo"], ["WAMJ", "Gebe"], ["WATQ", "John Becker"], ["WAPF", "Karel Sadsuitubun"], ["WAEK", "Kuabang"], ["WAPS", "Mathilda Batlayeri"], ["WAPR", "Namlea"], ["WAPG", "Namrole"], ["WAEL", "Oesman Sadik"], ["WAPP", "Pattimura"], ["WAEW", "Pitu"], ["WAEE", "Sultan Babullah"], ["WAPV", "Wahai"], ["WABY", "Bilogai"], ["WABB", "Frans Kaisiepo"], ["WAVV", "Wamena"], ["WAKK", "Mopah"], ["WABP", "Mozes Kilangin"], ["WASS", "Domine Eduard Osok"], ["WABM", "Batom"], ["WAKE", "Ewer"], ["WAVD", "Nop Goliat Dekai"], ["WAJO", "Oksibil"], ["WAJJ", "Sentani"], ["WAPO", "Stevanus Rumbewas"], ["WAKT", "Tanah Merah"], ["WAST", "Teminabuan"], ["WASK", "Utarom"], ["WABA", "Waghete"], ["WASW", "Wasior"]];
+const API=location.protocol==='file:'?'http://localhost:3000':'';
+let S={};try{S=JSON.parse(localStorage.getItem('pb'))||{}}catch{}
+const save=()=>{try{localStorage.setItem('pb',JSON.stringify(S))}catch{}};
+const day=o=>{const d=new Date(Date.now()-o*864e5);return pad(d.getUTCDate())+pad(d.getUTCMonth()+1)+d.getUTCFullYear()};
+const BM={sat:'https://inderaja.bmkg.go.id/IMAGE/HIMA/H08_EH_Indonesia.png',st:'https://dataweb.bmkg.go.id/cuaca/angin/streamline-d10.jpg',wt:(l,h)=>`https://web-aviation.bmkg.go.id/model/windtemp/${l}_${h}.png`,rs:(d,f)=>`https://web-aviation.bmkg.go.id/rason/${d}/${f}?id=${Math.floor(Math.random()*9e5+1e5)}`};
+const LV=[[850,'FL050'],[700,'FL100'],[600,'FL140'],[500,'FL180'],[400,'FL240'],[300,'FL300'],[250,'FL340'],[200,'FL390'],[150,'FL450'],[100,'FL530']];
+const nm=c=>(AP.find(a=>a[0]===c)||[])[1]||'Aerodrome / stasiun domestik';
+
+/* jam & tanggal */
+function tick(){const n=new Date();$$('.utc').forEach(e=>e.textContent=n.toISOString().slice(11,19));$$('.wib').forEach(e=>e.textContent=new Date(+n+252e5).toISOString().slice(11,19));$$('.date').forEach(e=>e.textContent=n.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}))}
+tick();setInterval(tick,1e3);
+
+/* gambar: loading / gagal / coba lagi */
+document.addEventListener('error',e=>{const i=e.target;if(i.tagName!=='IMG')return;
+ const al=(i.dataset.alt||'').split('|').filter(Boolean);if(al.length){i.dataset.alt=al.slice(1).join('|');i.src=al[0];const c=i.closest('.hz');if(c)$('.cap',c).textContent='Data hari sebelumnya (UTC)';return}
+ const f=i.closest('.frame');if(!f)return;f.classList.remove('loading');i.hidden=true;let m=$('.fail',f);if(!m){m=document.createElement('div');m.className='fail';f.append(m)}
+ m.innerHTML='<b>Gagal memuat dari server BMKG</b>Periksa koneksi atau data belum terbit. <br><a target="_blank" rel="noopener" href="'+i.src+'">Buka URL gambar langsung di BMKG</a><br><button class="btn" style="margin-top:10px">Coba lagi</button>';$('button',m).onclick=()=>{m.remove();i.hidden=false;delete i.dataset.tried;f.classList.add('loading');i.src=i.dataset.u+(i.dataset.u.includes('?')?'&':'?')+'t='+Date.now()}},true);
+document.addEventListener('load',e=>{const f=e.target.closest&&e.target.closest('.frame');if(f)f.classList.remove('loading')},true);
+function show(i,u,alt){const f=i.closest('.frame');f.classList.add('loading');$('.fail',f)?.remove();i.hidden=false;delete i.dataset.tried;i.dataset.u=u;i.dataset.alt=alt||'';i.src=u}
+
+/* navigasi */
+const init={metar(){addRow();AP.forEach(a=>$('#apl').insertAdjacentHTML('beforeend',`<option value="${a[0]} - ${a[1]}">`));['WICC','WIII','WIHH','WICA','WARR','WAHH','WADD'].forEach(c=>$('#chips').insertAdjacentHTML('beforeend',`<button class="chip" data-c="${c}">${c}</button>`))},sat:loadSat,vis:loadVis,st:loadSt,wt(){addCh(850,'00');addCh(500,'00');renderCh()}};
+function go(v){$$('.view').forEach(x=>x.hidden=x.id!=='v-'+v);$$('.tab').forEach(t=>t.classList.toggle('on',t.dataset.v===v));if(init[v]){init[v]();delete init[v]}scrollTo({top:0})}
+$('#tabs').onclick=e=>{const b=e.target.closest('[data-v]');b&&go(b.dataset.v)};$$('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+[['Satelit Himawari',BM.sat],['Streamline BMKG',BM.st],['Wind/Temp BMKG',BM.wt(850,'00')]].forEach(([n,u])=>{const s=document.createElement('span');s.innerHTML=`<i class="d"></i>${n}`;$('#srcs').append(s);const im=new Image();im.referrerPolicy='no-referrer';im.onload=()=>s.firstChild.className='d ok';im.onerror=()=>s.firstChild.className='d no';im.src=u+'?t='+Date.now()});
+
+/* METAR / TAF */
+function addRow(v=''){$('#rows').insertAdjacentHTML('beforeend',`<div class="row"><input type="text" class="ap" list="apl" placeholder="Kode ICAO atau nama bandara, mis. WICC / Husein" value="${v}"><button class="x" title="Hapus baris">✕</button></div>`)}
+$('#rows')?.addEventListener('click',e=>{if(e.target.classList.contains('x')){$$('.row').length>1?e.target.parentNode.remove():alert('Sisakan minimal 1 bandara.')}});
+document.addEventListener('click',e=>{if(!e.target.classList?.contains('chip'))return;const c=e.target.dataset.c;let r=$$('.ap').find(i=>!i.value.trim());if(!r){addRow();r=$$('.ap').pop()}r.value=c+' - '+nm(c);runMetar()});
+const cat=m=>{if(!m)return'';const v=/CAVOK/.test(m)?9999:+((m.match(/\s(\d{4})\s/)||[])[1]||9999),c=Math.min(1e5,...[...m.matchAll(/(?:BKN|OVC|VV)(\d{3})/g)].map(x=>x[1]*100));return v<1600||c<500?'LIFR':v<5000||c<1000?'IFR':v<8000||c<3000?'MVFR':'VFR'};
+const CKEY='bf67596df36141cdac2ab34364078cf1';
+async function wx(c){const q=async(u,h)=>{try{const r=await fetch(u,{headers:h,signal:AbortSignal.timeout(9000)});return r.ok?r:null}catch{return null}};
+ let r=await q(`${API}/api/weather?icao=${c}`);if(r){const j=await r.json();if(j.metar||j.taf)return j}
+ const b='https://aviationweather.gov/api/data',[m,f]=await Promise.all([q(`${b}/metar?ids=${c}&format=raw&hours=3`),q(`${b}/taf?ids=${c}&format=raw`)]);
+ const mt=m?(await m.text()).trim().split('\n')[0]:'',tt=f?(await f.text()).trim():'';if(mt||tt)return{metar:mt||null,taf:tt||null,source:'NOAA AWC (relay BMKG)'};
+ const h={'X-API-Key':CKEY},[x,y]=await Promise.all([q(`https://api.checkwx.com/metar/${c}`,h),q(`https://api.checkwx.com/taf/${c}`,h)]);
+ const jx=x?await x.json():{},jy=y?await y.json():{};return jx.data?.length||jy.data?.length?{metar:jx.data?.[0]||null,taf:jy.data?.[0]||null,source:'CheckWX'}:null}
+async function runMetar(){const b=$('#go');b.disabled=true;b.textContent='Memuat data live…';
+ const cs=[...new Set($$('.ap').map(i=>i.value.trim().slice(0,4).toUpperCase()).filter(Boolean))];
+ if(!cs.length){$('#res').innerHTML='<p class="fail">Ketik minimal satu bandara.</p>';b.disabled=false;b.textContent='Tampilkan semua data';return}
+ $('#res').innerHTML='<p class="k">Mengambil data…</p>';const out=await Promise.all(cs.map(async c=>({c,d:await wx(c)})));
+ S.man=S.man||{};$('#res').innerHTML=out.map(({c,d})=>{const m=S.man[c]||{};
+  const blk=(k,t)=>d&&d[k]?`<pre style="background:transparent;border:0;padding:4px 0;margin:2px 0 12px;font-size:13.5px;color:var(--tx)">${d[k]}</pre>`:`<p class="k" style="margin:4px 0">Data ${t} otomatis tidak tersedia. Tempel dari <a target="_blank" rel="noopener" href="https://web-aviation.bmkg.go.id/web/${k==='metar'?'metar_speci':'taf'}.php">BMKG Aviation</a>:</p><textarea data-c="${c}" data-k="${k}" rows="2" style="width:100%;margin-bottom:10px" placeholder="Tempel ${t} di sini">${m[k]||''}</textarea>`;
+  return `<div class="card" style="box-shadow:none"><div style="margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--ln)"><b>${c}</b> — <span class="k">${nm(c)}</span></div><div class="k">METAR</div>${blk('metar','METAR')}<div class="k">TAF</div>${blk('taf','TAF')}</div>`}).join('');
+ S.metar=out.map(({c,d})=>({c,n:nm(c),m:d?.metar||'',t:d?.taf||'',s:d?.source||'manual'}));save();b.disabled=false;b.textContent='Tampilkan semua data'}
+$('#res').addEventListener('input',e=>{const t=e.target;if(!t.dataset.c)return;S.man[t.dataset.c]=S.man[t.dataset.c]||{};S.man[t.dataset.c][t.dataset.k]=t.value;const r=S.metar.find(x=>x.c===t.dataset.c);if(r){r[t.dataset.k==='metar'?'m':'t']=t.value;r.s=r.s==='manual'||!r.s?'manual':r.s}save()});
+
+/* Satelit */
+function loadSat(){show($('#satimg'),BM.sat+'?t='+Date.now());const t=new Date().toISOString().slice(11,16)+' UTC';$('#sat-t').textContent='Dimuat '+t;S.sat={u:BM.sat+'?t='+Date.now(),t,pdf:$('#satpdf')?$('#satpdf').checked:true};save()}
+setInterval(()=>{if(!$('#v-sat').hidden)loadSat()},6e5);
+
+/* Visibility METAR (Visibility Map & Visibility FU + multi-chart + PDF checkbox) */
+const VIS_TYPES=[['visibility_map','Visibility Map'],['visibility_fu','Visibility FU']];
+const visBaseUrl=(tp,tm)=>`https://web-aviation.bmkg.go.id/vis-metar/${tp}_${tm}.png`;
+const visUrl=(tp,tm)=>`${visBaseUrl(tp,tm)}?id=${Math.floor(Math.random()*9e6+1e6)}`;
+function getVisSlots(){const slots=[];for(let h=0;h<24;h++)for(const m of['00','30'])slots.push(`${pad(h)}-${m}`);return slots}
+function getDefaultVisSlot(){const n=new Date(),curH=n.getUTCHours(),curM=n.getUTCMinutes()>=30?'30':'00';return`${pad(curH)}-${curM}`}
+function syncVisState(){
+ const cards=$$('#visrows .vis-card');
+ S.visCharts=cards.map(c=>{
+  const tp=$('.vistype',c).value,tm=$('.vistime',c).value,pdf=$('.vispdf',c).checked;
+  const label=(VIS_TYPES.find(x=>x[0]===tp)||[tp,tp])[1];
+  return{tp,tm,label,t:tm.replace('-','.')+' UTC',u:visBaseUrl(tp,tm),pdf};
+ });
+ save();
+}
+function renderVisCard(card,useFallback=false){
+ const tp=$('.vistype',card).value,tm=$('.vistime',card).value,img=$('img',card);
+ const slots=getVisSlots(),idx=slots.indexOf(tm);
+ const prev1=slots[(idx-1+48)%48],prev2=slots[(idx-2+48)%48];
+ const alts=useFallback?[visUrl(tp,prev1),visUrl(tp,prev2)].join('|'):'';
+ show(img,visUrl(tp,tm),alts);
+ syncVisState();
+}
+function addVisCh(tp='visibility_map',tm=null,pdf=true,useFallback=false){
+ const slots=getVisSlots(),selTm=tm||getDefaultVisSlot();
+ const id='vc_'+Math.random().toString(36).slice(2,8);
+ const htmlCard=`<div class="card vis-card" id="${id}">
+  <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:14px">
+   <div style="flex:1;min-width:190px">
+    <label class="k" style="display:block;font-weight:600;color:var(--tx);margin-bottom:6px">Select type</label>
+    <select class="vistype" style="width:100%">${VIS_TYPES.map(([v,l])=>`<option value="${v}"${v===tp?' selected':''}>${l}</option>`).join('')}</select>
+   </div>
+   <div style="flex:1;min-width:170px">
+    <label class="k" style="display:block;font-weight:600;color:var(--tx);margin-bottom:6px">Select Time</label>
+    <select class="vistime" style="width:100%">${slots.map(sl=>`<option value="${sl}"${sl===selTm?' selected':''}>${sl.replace('-','.')} UTC</option>`).join('')}</select>
+   </div>
+   <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+    <button class="btn pri" style="padding:10px 20px;border-radius:999px" onclick="renderVisCard(this.closest('.vis-card'),false)">Show Image</button>
+    <label class="k" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none;font-weight:600;color:var(--tx);background:#f3f8ff;border:1px solid var(--ln);padding:8px 12px;border-radius:10px">
+     <input type="checkbox" class="vispdf" ${pdf?'checked':''} onchange="syncVisState()"> Cantumkan di PDF
+    </label>
+    <button class="x" style="padding:9px 13px" title="Hapus chart" onclick="if($$('#visrows .vis-card').length>1){this.closest('.vis-card').remove();syncVisState()}else{alert('Sisakan minimal 1 chart Visibility.')}">✕</button>
+   </div>
+  </div>
+  <div class="frame"><img alt="Visibility METAR BMKG"></div>
+  <p class="k" style="margin-top:10px">Sumber: Badan Meteorologi Klimatologi dan Geofisika (BMKG) · Klik gambar untuk zoom.</p>
+ </div>`;
+ $('#visrows').insertAdjacentHTML('beforeend',htmlCard);
+ renderVisCard($('#'+id),useFallback);
+}
+function loadVis(){
+ if($('#visrows').children.length)return;
+ if(Array.isArray(S.visCharts)&&S.visCharts.length){
+  S.visCharts.forEach(c=>addVisCh(c.tp||'visibility_map',c.tm||getDefaultVisSlot(),c.pdf!==false,false));
+ }else{
+  addVisCh('visibility_map',null,true,true);
+ }
+}
+/* Streamline */
+let zs=1;function zoom(d){zs=d?Math.min(2.5,Math.max(.75,zs+d)):1;$('#stimg').style.transform=`scale(${zs})`;$('#zv').textContent=Math.round(zs*100)+'%'}
+function loadSt(){const n=new Date(Date.now()+864e5).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});S.st={u:BM.st+'?t='+Date.now(),l:'Prakiraan besok ('+n+')',pdf:$('#stpdf')?$('#stpdf').checked:true};save();$('#st-t').textContent='Prakiraan angin 3000 ft untuk besok ('+n+'), dari BMKG. Auto-refresh 15 menit.';zoom(0);show($('#stimg'),S.st.u)}
+setInterval(()=>{if(!$('#v-st').hidden)loadSt()},9e5);
+
+/* Wind/Temp */
+function addCh(l=850,h='00',pdf=true){$('#chrows').insertAdjacentHTML('beforeend',`<div class="card row" style="align-items:center;flex-wrap:wrap;gap:10px"><select class="lv">${LV.map(a=>`<option value="${a[0]}"${a[0]==l?' selected':''}>${a[1]} (${a[0]} hPa)</option>`).join('')}</select><select class="hr">${['00','06','12','18'].map(x=>`<option value="${x}"${x==h?' selected':''}>${x} UTC</option>`).join('')}</select><label class="k" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none;font-weight:600;color:var(--tx)"><input type="checkbox" class="chpdf" ${pdf?'checked':''} onchange="syncChPdf()"> Cantumkan di PDF</label><button class="x" style="padding:10px 14px" onclick="this.parentNode.remove();renderCh()">✕</button></div>`)}
+function syncChPdf(){if(!S.ch)return;const C=$$('.chpdf');S.ch.forEach((c,i)=>{if(C[i])c.pdf=C[i].checked});save()}
+function renderCh(){const L=$$('.lv'),H=$$('.hr'),C=$$('.chpdf');S.ch=L.map((e,i)=>({u:BM.wt(e.value,H[i].value),l:LV.find(a=>a[0]==e.value)[1]+' ('+e.value+' hPa)',h:H[i].value,pdf:C[i]?C[i].checked:true}));save();
+ $('#chout').innerHTML=S.ch.map((c,idx)=>`<div class="card"><header><h3>${c.l}</h3><div style="display:flex;align-items:center;gap:10px"><label class="k" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-weight:600;color:var(--tx)"><input type="checkbox" ${c.pdf!==false?'checked':''} onchange="S.ch[${idx}].pdf=this.checked;if($$('.chpdf')[${idx}])$$('.chpdf')[${idx}].checked=this.checked;save()"> Cantumkan di PDF</label><span class="badge">VALID ${c.h} UTC</span></div></header><div class="frame"><img src="${c.u}?t=${Date.now()}" data-u="${c.u}" alt="${c.l}"></div></div>`).join('');$$('#chout .frame').forEach(f=>f.classList.add('loading'))}
+
+/* Laporan PDF */
+const RCSS=`#rep{font:11.5px/1.45 'IBM Plex Sans',Arial,sans-serif;color:#0f2744}#rep .cov{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;background:linear-gradient(100deg,#1769e0,#0a9fd8);color:#fff}
+#rep .cov img{height:32px;background:#fff;padding:4px 6px;border-radius:8px}#rep .cov h1{font-size:19px;margin:0}#rep .cov small{opacity:.9}#rep .cov .r{margin-left:auto;text-align:right;font-size:10.5px}
+#rep h2{font-size:12.5px;margin:16px 0 6px;padding-left:8px;border-left:4px solid #f26a00}#rep table{width:100%;border-collapse:collapse;font-size:10.5px;margin-bottom:8px}#rep th{background:#eaf2ff;text-align:left}#rep td,#rep th{border:1px solid #d6e3f6;padding:4px 6px}
+#rep pre{background:#f3f8ff;border:1px solid #d6e3f6;border-radius:6px;padding:6px 8px;font:10px/1.4 'IBM Plex Mono',monospace;white-space:pre-wrap;margin:3px 0 8px;color:#0f2744}
+#rep figure{margin:0 0 6mm;break-inside:avoid;text-align:center}#rep figcaption{font:600 10.5px 'IBM Plex Mono',monospace;color:#1769e0;margin-bottom:3px}#rep img.f{max-width:94%;max-height:112mm;border:1px solid #d6e3f6;border-radius:6px}
+#rep .sr{font-size:8.5px;color:#7a8ca8}#rep .nt{font-size:9px;color:#5b7090;margin-top:14px;border-top:1px solid #d6e3f6;padding-top:6px}`;
+function report(){const fg=(l,u)=>`<figure><figcaption>${l}</figcaption><img class="f" src="${u}"><div class="sr">Sumber: BMKG</div></figure>`,sec=(t,b)=>b?`<section><h2>${t}</h2>${b}</section>`:'',M=S.metar||[],
+ row=r=>{const d=r.m?dec(r.m):{};return `<tr><td><b>${r.c}</b> ${r.n}</td><td>${d.wd==null?(d.ws?'VRB/'+d.ws+'kt':'-'):d.wd+'°/'+d.ws+'kt'}</td><td>${d.vis||'-'}</td><td>${d.t==null?'-':d.t+'/'+d.td+'°C'}</td><td>${d.q||'-'}</td><td><b>${cat(r.m)||'-'}</b></td></tr>`},
+ V=(S.vis||[]).map(r=>`<tr><td><b>${r.c}</b> ${r.n}</td><td>${r.v==null?'n/a':r.v>=9999?'≥ 10 km':r.v+' m'}</td><td><b>${r.cat||'-'}</b></td></tr>`).join('');
+ return `<div class="cov"><img src="gambar/logo%20ptdi.webp"><img src="gambar/logo%20bmkg.jpg"><img src="gambar/logo%20itb.webp"><div><h1>Official Flight Weather Briefing</h1><small>PT Dirgantara Indonesia · Flight Test Operations FT2000 · Data: BMKG</small></div><div class="r">Dibuat<br><b>${new Date().toISOString().slice(0,16).replace('T',' ')} UTC</b><br>Status: VERIFIED OPERATIONAL</div></div>`
+ +sec('1. Multi-Aerodrome METAR / TAF',M.length?`<table><tr><th>Aerodrome</th><th>Angin</th><th>Visibilitas</th><th>T/Td</th><th>QNH</th><th>Kategori</th></tr>${M.map(row).join('')}</table>`+M.map(r=>`<b>${r.c}</b> <small>(${r.s})</small><pre>${/^(METAR|SPECI)/.test(r.m)?r.m:'METAR '+(r.m||'-')}\n${/^TAF/.test(r.t)?r.t:'TAF '+(r.t||'-')}</pre>`).join(''):'')
+ +sec('2. Visibility METAR',V?`<table><tr><th>Aerodrome</th><th>Visibilitas</th><th>Kategori</th></tr>${V}</table>`:'')
+ +sec('3. Himawari-9 Satellite Imagery',S.sat?fg('Himawari-9 Enhanced IR — '+S.sat.t,S.sat.u):'')+sec('4. Streamline Analysis (3000 Ft Layer)',S.st?fg(S.st.l,S.st.u):'')
+ +sec('5. Upper Air Wind &amp; Temperature Charts',(S.ch||[]).map(c=>fg(c.l+' — '+c.h+' UTC',c.u)).join(''))+'<div class="nt">Dokumen pendukung briefing. Data wajib dicocokkan dengan kantor meteorologi penerbangan resmi BMKG sebelum operasi.</div>'}
+const base=location.protocol==='file:'?'http://localhost:3000/':location.origin+'/',fullDoc=()=>`<!DOCTYPE html><meta charset=utf-8><base href="${base}"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet"><style>${RCSS}</style><div id="rep">${report()}</div>`;
+document.head.insertAdjacentHTML('beforeend',`<style>${RCSS}@media print{@page{margin:10mm}body>*:not(#rep){display:none!important}body{display:block!important;background:#fff!important}#rep{display:block!important}}</style>`);
+
+/* METAR terdekode: kompas angin + kalkulator crosswind */
+function dec(m){const w=m.match(/\b(\d{3}|VRB)(\d{2,3})(?:G(\d{2,3}))?KT\b/),tp=m.match(/\b(M?\d{2})\/(M?\d{2})\b/),q=m.match(/\bQ(\d{4})\b/),n=s=>+s.replace('M','-');
+ return{wd:w&&w[1]!=='VRB'?+w[1]:null,ws:w?+w[2]:0,g:w?.[3],vis:/CAVOK/.test(m)?'CAVOK':(m.match(/\s(\d{4})\s/)||[])[1],t:tp&&n(tp[1]),td:tp&&n(tp[2]),q:q&&q[1],cl:[...m.matchAll(/(FEW|SCT|BKN|OVC)(\d{3})/g)].map(x=>x[1]+' '+x[2]*100+'ft').join(', ')||'-'}}
+function viz(m,i){const d=dec(m),T=(l,v)=>`<div><b>${v??'-'}</b><small>${l}</small></div>`;
+ const sv=d.wd==null?'':`<svg viewBox="-60 -60 120 120" width="150"><circle r="52" fill="#eef5ff" stroke="#cfe0f7" stroke-width="2"/><g id="rw${i}" style="transform:rotate(100deg)"><rect x="-4" y="-46" width="8" height="92" rx="2" fill="#8aa6cf"/></g><g style="transform:rotate(${d.wd}deg)"><path d="M0 -46 L8 -26 L0 -32 L-8 -26Z" fill="#f26a00"/></g><text y="-38" x="-3" font-size="8" fill="#5b7090">N</text><text y="-3" x="-5" font-size="9" fill="#f26a00" text-anchor="middle">${d.ws}kt</text></svg>`;
+ const cw=d.wd==null?'':`<label class="k" style="display:block;width:100%">Heading runway <b id="rv${i}" class="mono">100°</b><input type="range" class="rwy" min="1" max="360" value="100" data-i="${i}" data-wd="${d.wd}" data-ws="${d.ws}"></label><div class="k" id="xw${i}"></div>`;
+ return `<div class="viz">${sv}<div class="tiles">${T('Angin',d.wd==null?'VRB '+d.ws+'kt':d.wd+'°/'+d.ws+'kt'+(d.g?' G'+d.g:''))}${T('Visibilitas',d.vis)}${T('Suhu / Td',d.t==null?'-':d.t+'/'+d.td+'°C')}${T('QNH',d.q&&d.q+' hPa')}${T('Awan',d.cl)}${T('Spread',d.t==null?'-':(d.t-d.td)+'°C')}</div>${cw}</div>`}
+$('#res').addEventListener('input',e=>{const s=e.target;if(!s.classList.contains('rwy'))return;const i=s.dataset.i,r=+s.value,a=(+s.dataset.wd-r)*Math.PI/180,ws=+s.dataset.ws,h=Math.round(ws*Math.cos(a)),x=Math.round(ws*Math.sin(a));
+ $('#rw'+i).style.transform=`rotate(${r}deg)`;$('#rv'+i).textContent=r+'°';$('#xw'+i).innerHTML=`${h>=0?'Headwind':'Tailwind'} <b style="color:var(--am)">${Math.abs(h)} kt</b> · Crosswind <b style="color:${Math.abs(x)>20?'var(--rd)':'var(--tl)'}">${Math.abs(x)} kt</b> ${x>0?'dari kanan':x<0?'dari kiri':''}`});
+document.addEventListener('input',e=>{if(e.target.classList.contains('rwy')&&!e.target.dataset.o){e.target.dataset.o=1}});
+/* kartu 3D + spotlight */
+$$('.mod').forEach(b=>{b.onmousemove=e=>{const r=b.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;b.style.setProperty('--mx',x*100+'%');b.style.setProperty('--my',y*100+'%');b.style.transform=`perspective(700px) rotateY(${(x-.5)*12}deg) rotateX(${(.5-y)*12}deg) translateY(-4px)`};b.onmouseleave=()=>b.style.transform=''});
+/* medan angin interaktif di hero: partikel mengalir & berputar di sekitar kursor */
+(()=>{const c=$('#flow'),x=c.getContext('2d'),m={x:-999,y:-999};let W,H,P;const rs=()=>{W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;P=Array.from({length:Math.min(260,W/4|0)},()=>({x:Math.random()*W,y:Math.random()*H}))};rs();addEventListener('resize',rs);
+ c.parentNode.onmousemove=e=>{const r=c.getBoundingClientRect();m.x=e.clientX-r.left;m.y=e.clientY-r.top};c.parentNode.onmouseleave=()=>m.x=-999;
+ const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ (function f(t){requestAnimationFrame(f);if($('#v-home').hidden||rm&&t>500)return;x.clearRect(0,0,W,H);x.lineWidth=1.4;
+  for(const p of P){let a=Math.sin(p.x/110+t/3500)*1.2+Math.cos(p.y/80-t/4200),dx=p.x-m.x,dy=p.y-m.y,d=Math.hypot(dx,dy);if(d<150){a=Math.atan2(dy,dx)+1.57*(1-d/150)+1.2}
+   const s=1.2+(d<150?2.5*(1-d/150):0),nx=p.x+Math.cos(a)*s,ny=p.y+Math.sin(a)*s;x.strokeStyle=d<150?'rgba(242,106,0,.8)':'rgba(23,105,224,.4)';x.beginPath();x.moveTo(p.x,p.y);x.lineTo(p.x-Math.cos(a)*s*7,p.y-Math.sin(a)*s*7);x.stroke();p.x=nx;p.y=ny;if(nx<0||nx>W||ny<0||ny>H){p.x=Math.random()*W;p.y=Math.random()*H}}})(0)})();
+/* lightbox zoom & geser untuk semua gambar */
+(()=>{const L=$('#lb'),im=$('img',L);let s=1,x=0,y=0,dn=0,px,py;const ap=()=>im.style.transform=`translate(-50%,-50%) translate(${x}px,${y}px) scale(${s})`;
+ document.addEventListener('click',e=>{const i=e.target;if(i.tagName==='IMG'&&i.closest('.frame')&&i.naturalWidth){im.src=i.src;s=1;x=y=0;ap();L.classList.add('on')}else if(e.target===L)L.classList.remove('on')});
+ addEventListener('keydown',e=>e.key==='Escape'&&L.classList.remove('on'));L.onwheel=e=>{e.preventDefault();s=Math.min(8,Math.max(.5,s*(e.deltaY<0?1.15:.87)));ap()};
+ L.onmousedown=e=>{dn=1;px=e.clientX;py=e.clientY;L.style.cursor='grabbing'};addEventListener('mouseup',()=>{dn=0;L.style.cursor=''});addEventListener('mousemove',e=>{if(dn){x+=e.clientX-px;y+=e.clientY-py;px=e.clientX;py=e.clientY;ap()}})})();
+if(location.hash.length>1&&$('#v-'+location.hash.slice(1)))go(location.hash.slice(1));
+</script>
+<script src="brief.js"></script></body></html>

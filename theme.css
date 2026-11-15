@@ -1,0 +1,22 @@
+/* Tema cerah: langit, awan bergerak, kaca bening */
+:root{--bg:#dff1ff;--ln:#ffffffb8;--tx:#0b2a52;--mu:#47698f;--am:#ff7a00;--bl:#1479ff;--tl:#00b894}
+body{background:linear-gradient(180deg,#5cc2ff 0,#a8e0ff 320px,#e6f6ff 720px,#fff8ec 100%) fixed!important}
+body::before,body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:url(gambar/awan.webp) 0 0/760px repeat-x;opacity:.55;animation:drift 90s linear infinite}
+body::after{background-size:1100px;background-position:0 220px;opacity:.35;animation-duration:150s;animation-direction:reverse}
+@keyframes drift{to{background-position-x:1520px}}
+body::before{filter:saturate(.3) brightness(1.4)}
+.side{background:#ffffff99!important;backdrop-filter:blur(18px) saturate(1.6);border-right:1px solid #fff!important;box-shadow:12px 0 40px -28px #1479ff}
+.b,.card{background:#ffffffc9!important;backdrop-filter:blur(14px);border:1px solid #fff!important;border-radius:26px!important;box-shadow:0 24px 50px -28px #0a64d9aa,inset 0 1px 0 #fff}
+.hero{background:linear-gradient(100deg,#ffffffee 36%,#ffffff70 62%,#ffffff00),url(gambar/pesawat.jpg) right/cover!important;min-height:380px}
+.hero h2{font-size:clamp(32px,4.2vw,56px)!important;background:linear-gradient(95deg,#0b2a52,#1479ff 60%,#00b3d6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.zulu{background:radial-gradient(circle at 85% 10%,#ffe27a 0,#ffb64a 14%,transparent 15%),linear-gradient(160deg,#1479ff,#00b3d6 70%,#6fe3ff)!important}
+.btn.pri{background:linear-gradient(100deg,#ff7a00,#ffb000)!important;box-shadow:0 12px 26px -10px #ff7a00}
+.tab.on{background:linear-gradient(100deg,#1479ff,#00b3d6)!important}
+.mod:hover{transform:translateY(-6px)}
+.vd{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-radius:18px;margin:4px 0 12px;color:#fff;box-shadow:0 14px 28px -16px currentColor}
+.vd b.big{font:800 26px 'Bricolage Grotesque',sans-serif;line-height:1;white-space:nowrap}.vd ul{margin:4px 0 0;padding-left:18px;font-size:13px}.vd small{opacity:.92}
+.vd.GO{background:linear-gradient(100deg,#0f9f5b,#2fd68a)}.vd.CAUTION{background:linear-gradient(100deg,#e08a00,#ffc23d);color:#3a2500}.vd.NOGO{background:linear-gradient(100deg,#d3243a,#ff6b7a)}
+.sumbar{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}.sumbar span{padding:8px 14px;border-radius:999px;font:700 13px 'IBM Plex Mono';color:#fff}
+.vlink{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:16px;border-radius:18px;background:linear-gradient(100deg,#e8f4ff,#fff)}
+#visman{width:100%;margin-top:8px}.vr{background:#ffffff80;border-radius:12px;padding:8px 10px!important;margin-bottom:6px;border:0!important}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#0b2a52;color:#fff;padding:12px 22px;border-radius:999px;z-index:120;box-shadow:0 20px 40px -12px #0b2a52}
